@@ -1,0 +1,8 @@
+addSbtPlugin("com.eed3si9n" % "sbt-vimquit" % "0.1.1")
+addSbtPlugin("com.github.sbt" % "flyway-sbt" % "11.11.0")
+addSbtPlugin("com.github.sbt" % "sbt-git" % "2.1.0")
+addSbtPlugin("com.github.sbt" % "sbt-pgp" % "2.3.1")
+addSbtPlugin("com.github.sbt" % "sbt-web" % "1.6.0-M1")
+addSbtPlugin("io.github.sbt-doctest" % "sbt-doctest" % "0.11.3")
+addSbtPlugin("org.wartremover" % "sbt-wartremover" % "3.4.0")
+addSbtPlugin("org.wartremover" % "sbt-wartremover-contrib" % "2.3.4")

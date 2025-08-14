@@ -1,3 +1,4 @@
+addSbtPlugin("com.eed3si9n" % "sbt-buildinfo" % "0.13.1")
 addSbtPlugin("com.eed3si9n" % "sbt-vimquit" % "0.1.1")
 addSbtPlugin("com.github.sbt" % "flyway-sbt" % "11.11.0")
 addSbtPlugin("com.github.sbt" % "sbt-git" % "2.1.0")

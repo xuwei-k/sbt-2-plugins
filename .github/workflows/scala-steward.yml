@@ -1,0 +1,27 @@
+on:
+  push:
+    branches: [ main ]
+  schedule:
+  - cron: '0 7 * * *'
+  workflow_dispatch:
+jobs:
+  scala-steward:
+    runs-on: ubuntu-latest
+    if: ${{ github.repository_owner == 'xuwei-k' }}
+    steps:
+    - uses: actions/setup-java@v5
+      with:
+        distribution: adopt
+        java-version: 11
+    - uses: actions/create-github-app-token@67018539274d69449ef7c02e8e71183d1719ab42 # v2.1.4
+      id: generate_token
+      with:
+        app-id: 89536
+        private-key: ${{ secrets.XUWEI_K_BOT_KEY }}
+    - uses: scala-steward-org/scala-steward-action@v2
+      with:
+        github-token: ${{ steps.generate_token.outputs.token }}
+        author-email: "74788111+xuwei-k-bot[bot]@users.noreply.github.com"
+        author-name: "xuwei-k-bot[bot]"
+      env:
+        JAVA_OPTS: "-Xmx4G"

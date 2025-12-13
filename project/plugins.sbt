@@ -12,6 +12,7 @@ addSbtPlugin("com.github.sbt" % "sbt-git" % "2.1.0")
 addSbtPlugin("com.github.sbt" % "sbt-github-actions" % "0.29.0") // scala-steward:off
 addSbtPlugin("com.github.sbt" % "sbt-header" % "5.11.0")
 addSbtPlugin("com.github.sbt" % "sbt-jacoco" % "3.6.0")
+addSbtPlugin("com.github.sbt" % "sbt-javaagent" % "0.2.0")
 addSbtPlugin("com.github.sbt" % "sbt-js-engine" % "1.4.0-M1")
 addSbtPlugin("com.github.sbt" % "sbt-license-report" % "1.9.0")
 addSbtPlugin("com.github.sbt" % "sbt-native-packager" % "1.11.4")

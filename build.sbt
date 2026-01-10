@@ -1,1 +1,1 @@
-
+autoScalaLibrary := false

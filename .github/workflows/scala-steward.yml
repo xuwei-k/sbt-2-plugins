@@ -4,6 +4,8 @@ on:
   schedule:
   - cron: '0 7 * * *'
   workflow_dispatch:
+concurrency:
+  group: scala-steward
 jobs:
   scala-steward:
     runs-on: ubuntu-latest

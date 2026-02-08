@@ -1,4 +1,5 @@
 addSbtPlugin("africa.shuwari" % "sbt-version" % "0.6.2")
+addSbtPlugin("ch.epfl.scala" % "sbt-bloop" % "2.0.19")
 addSbtPlugin("ch.epfl.scala" % "sbt-github-dependency-submission" % "3.2.1")
 addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.14.5")
 addSbtPlugin("com.earldouglas" % "sbt-war" % "5.1.1")

@@ -70,7 +70,7 @@ addSbtPlugin("org.playframework.twirl" % "sbt-twirl" % "2.1.0-M7") // scala-stew
 addSbtPlugin("org.scala-sbt" % "sbt-contraband" % "0.8.0")
 addSbtPlugin("org.scalameta" % "sbt-mdoc" % "2.8.2")
 addSbtPlugin("org.scalameta" % "sbt-metals" % "1.6.5")
-addSbtPlugin("org.scalameta" % "sbt-munit" % "1.2.2")
+addSbtPlugin("org.scalameta" % "sbt-munit" % "1.2.3")
 addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.5.6")
 addSbtPlugin("org.scalaxb" % "sbt-scalaxb" % "1.12.4")
 addSbtPlugin("org.scoverage" % "sbt-scoverage" % "2.4.4")

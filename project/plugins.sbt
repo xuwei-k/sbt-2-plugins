@@ -64,7 +64,7 @@ addSbtPlugin("org.foundweekends.conscript" % "sbt-conscript" % "0.5.9")
 addSbtPlugin("org.foundweekends.giter8" % "sbt-giter8" % "0.18.0")
 addSbtPlugin("org.foundweekends.giter8" % "sbt-giter8-scaffold" % "0.18.0")
 addSbtPlugin("org.jetbrains.scala" % "sbt-idea-shell" % "2025.3.0")
-addSbtPlugin("org.jetbrains.scala" % "sbt-structure-extractor" % "2026.1.2")
+addSbtPlugin("org.jetbrains.scala" % "sbt-structure-extractor" % "2026.1.3")
 addSbtPlugin("org.latestbit" % "sbt-gcs-plugin" % "2.0.0-RC1")
 addSbtPlugin("org.playframework.twirl" % "sbt-twirl" % "2.1.0-M7") // scala-steward:off
 addSbtPlugin("org.scala-sbt" % "sbt-contraband" % "0.8.0")

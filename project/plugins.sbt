@@ -69,7 +69,7 @@ addSbtPlugin("org.latestbit" % "sbt-gcs-plugin" % "2.0.0-RC1")
 addSbtPlugin("org.playframework.twirl" % "sbt-twirl" % "2.1.0-M7") // scala-steward:off
 addSbtPlugin("org.scala-sbt" % "sbt-contraband" % "0.8.0")
 addSbtPlugin("org.scalameta" % "sbt-mdoc" % "2.8.2")
-addSbtPlugin("org.scalameta" % "sbt-metals" % "1.6.5")
+addSbtPlugin("org.scalameta" % "sbt-metals" % "1.6.6")
 addSbtPlugin("org.scalameta" % "sbt-munit" % "1.2.4")
 addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.5.6")
 addSbtPlugin("org.scalaxb" % "sbt-scalaxb" % "1.12.4")

@@ -27,8 +27,12 @@ InputKey[Unit]("pluginUrlList") := {
           val r = a._1
           (r.module.organization.value == x.organization) && (r.module.name.value == dependency.module.name.value)
         }
-        .map(_._4.getAbsolutePath.dropRight(".jar".length) + ".pom")
-        .map(new File(_))
+        .map { a =>
+          (
+            a._3.extra("metadata").url,
+            new File(a._4.getAbsolutePath.dropRight(".jar".length) + ".pom")
+          )
+        }
     } catch {
       case e =>
         None
@@ -49,8 +53,9 @@ InputKey[Unit]("pluginUrlList") := {
   }
 }
 
-def pomToString(f: File, x: ModuleID): String = {
-  val pom = scala.xml.XML.loadFile(f)
+def pomToString(f: (String, File), x: ModuleID): String = {
+  val pomUrl = f._1
+  val pom = scala.xml.XML.loadFile(f._2)
   val url = (pom \ "url").text.trim match {
     case s"${prefix}/" => prefix
     case s"http://${suffix}" => s"https://${suffix}"
@@ -73,6 +78,7 @@ def pomToString(f: File, x: ModuleID): String = {
 
   Seq(
     Option(url),
+    Option(pomUrl),
     Option.when(url.toLowerCase(Locale.ROOT) != scmUrl.toLowerCase(Locale.ROOT))(scmUrl),
     Option.when((description != x.name) && (description != "plugin"))(description)
   ).flatten.map("- " + _).mkString(header + "\n", "\n", "\n")

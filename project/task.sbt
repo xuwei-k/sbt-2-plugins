@@ -1,3 +1,4 @@
+import java.util.Locale
 import java.nio.file.Files
 import java.nio.file.StandardOpenOption
 import lmcoursier.internal.shaded.coursier
@@ -72,7 +73,7 @@ def pomToString(f: File, x: ModuleID): String = {
 
   Seq(
     Option(url),
-    Option.when(url != scmUrl)(scmUrl),
+    Option.when(url.toLowerCase(Locale.ROOT) != scmUrl.toLowerCase(Locale.ROOT))(scmUrl),
     Option.when((description != x.name) && (description != "plugin"))(description)
   ).flatten.map("- " + _).mkString(header + "\n", "\n", "\n")
 }

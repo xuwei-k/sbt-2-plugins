@@ -18,5 +18,5 @@ jobs:
         distribution: temurin
     - run: wget https://raw.githubusercontent.com/dwijnand/sbt-extras/d7d876d6868ae1d262a7de38cbffbb8521c4233c/sbt
     - run: chmod +x ./sbt
-    - run: ./sbt -v scalafmtSbtCheck "reload plugins" "show libraryDependencies"
+    - run: ./sbt -v scalafmtSbtCheck "reload plugins" "show libraryDependencies" pluginUrlList
     - run: cat project/plugins.sbt | sort > tmp && diff tmp project/plugins.sbt

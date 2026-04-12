@@ -1,3 +1,4 @@
+import scala.collection.concurrent.TrieMap
 import lmcoursier.internal.shaded.coursier
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
@@ -63,6 +64,8 @@ InputKey[Unit]("pluginUrlList") := {
 
 lazy val githubTokenOpt: Option[String] = sys.env.get("GITHUB_TOKEN")
 
+val githubStarCache: TrieMap[String, Int] = TrieMap.empty[String, Int]
+
 val invalidGitHubRepos: Set[(String, String)] = Set(
   ("shuwarifrica", "version"), // https://github.com/cheleb/sbt-plantuml/pull/169
   ("cheleb", "plantuml-sbt-plugin"), // https://github.com/shuwariafrica/version/pull/94
@@ -114,24 +117,28 @@ def pomToString(f: (String, File), x: ModuleID, httpClient: HttpClient): String 
 
 def getStar(uri: String, token: String, httpClient: HttpClient): Option[Int] = {
   try {
-    val request = HttpRequest
-      .newBuilder()
-      .uri(
-        new URI(uri)
-      )
-      .header(
-        "authorization",
-        s"Bearer ${token}"
-      )
-      .header(
-        "content-type",
-        "application/json"
-      )
-      .build()
-    val response = httpClient.send(request, BodyHandlers.ofString()).body()
-
     Option(
-      Json.parse(response).as[JsObject].value.apply("stargazers_count").as[Int]
+      githubStarCache.getOrElseUpdate(
+        uri, {
+          val request = HttpRequest
+            .newBuilder()
+            .uri(
+              new URI(uri)
+            )
+            .header(
+              "authorization",
+              s"Bearer ${token}"
+            )
+            .header(
+              "content-type",
+              "application/json"
+            )
+            .build()
+          val response = httpClient.send(request, BodyHandlers.ofString()).body()
+
+          Json.parse(response).as[JsObject].value.apply("stargazers_count").as[Int]
+        }
+      )
     )
   } catch {
     case e =>

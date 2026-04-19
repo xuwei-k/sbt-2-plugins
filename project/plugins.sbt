@@ -1,7 +1,6 @@
 addSbtPlugin("africa.shuwari" % "sbt-version" % "0.6.2")
 addSbtPlugin("africa.shuwari.sbt" % "sbt-shuwari" % "0.15.3")
 addSbtPlugin("africa.shuwari.sbt" % "sbt-shuwari-core" % "0.15.3")
-addSbtPlugin("africa.shuwari.sbt" % "sbt-shuwari-header" % "0.15.3")
 addSbtPlugin("africa.shuwari.sbt" % "sbt-shuwari-mode" % "0.15.3")
 addSbtPlugin("africa.shuwari.sbt" % "sbt-shuwari-scalac" % "0.15.3")
 addSbtPlugin("ch.epfl.scala" % "sbt-bloop" % "2.0.19")

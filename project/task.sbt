@@ -11,48 +11,76 @@ import play.api.libs.json.JsObject
 import scala.util.Using
 
 InputKey[Unit]("pluginUrlList") := {
-  val result = Using.resource(HttpClient.newHttpClient()) { httpClient =>
-    libraryDependencies.value.filter { x =>
-      PartialFunction.cond(x.crossVersion) { case c: CrossVersion.Binary =>
-        c.prefix == "sbt2_"
-      }
-    }.flatMap { x =>
-      val dependency = coursier.Dependency(
-        coursier.Module(
-          coursier.Organization(x.organization),
-          coursier.ModuleName(s"${x.name}_sbt2_3")
-        ),
-        coursier.version.VersionConstraint(x.revision)
-      )
+  val result = Using
+    .resource(HttpClient.newHttpClient()) { httpClient =>
+      libraryDependencies.value.filter { x =>
+        PartialFunction.cond(x.crossVersion) { case c: CrossVersion.Binary =>
+          c.prefix == "sbt2_"
+        }
+      }.flatMap { x =>
+        val dependency = coursier.Dependency(
+          coursier.Module(
+            coursier.Organization(x.organization),
+            coursier.ModuleName(s"${x.name}_sbt2_3")
+          ),
+          coursier.version.VersionConstraint(x.revision)
+        )
 
-      val resOption = try {
-        coursier
-          .Fetch()
-          .addDependencies(dependency)
-          .runResult()
-          .detailedArtifacts0
-          .find { a =>
-            val r = a._1
-            (r.module.organization.value == x.organization) && (r.module.name.value == dependency.module.name.value)
-          }
-          .map { a =>
-            (
-              a._3.extra("metadata").url,
-              new File(a._4.getAbsolutePath.dropRight(".jar".length) + ".pom")
-            )
-          }
-      } catch {
-        case e =>
-          None
+        try {
+          coursier
+            .Fetch()
+            .addDependencies(dependency)
+            .withClassifiers(Set(lmcoursier.internal.shaded.coursier.core.Classifier.sources))
+            .runResult()
+            .detailedArtifacts0
+            .find { a =>
+              val r = a._1
+              (r.module.organization.value == x.organization) && (r.module.name.value == dependency.module.name.value)
+            }
+            .toSeq
+            .flatMap { a =>
+              a._4.getAbsolutePath +:
+                IO.withTemporaryDirectory { dir =>
+                  IO.unzip(a._4, dir)
+                  (dir ** "*.scala").get().flatMap { scalaFile =>
+                    import scala.meta._
+                    val src = Input.File(scalaFile)
+                    val p = implicitly[parsers.Parse[Source]]
+                    val tree = p.apply(src, dialects.Scala3).get
+                    tree.collect {
+                      case t @ Defn.Val(
+                            _,
+                            List(
+                              Pat.Var(_: Term.Name)
+                            ),
+                            None,
+                            Term.Apply.After_4_6_0(
+                              Term.ApplyType.After_4_6_0(
+                                Term.Name("taskKey"),
+                                Type.ArgClause(
+                                  List(
+                                    tpe
+                                  )
+                                )
+                              ),
+                              Term.ArgClause(
+                                _,
+                                None
+                              )
+                            )
+                          ) if tpe.toString.contains("File") && t.mods.find(_.is[Mod.Annot]).isEmpty =>
+                        t.toString
+                    }
+                  }
+                }
+            }
+        } catch {
+          case e =>
+            Nil
+        }
       }
-
-      if (resOption.isEmpty) {
-        println("error " + x)
-      }
-
-      resOption.map(pomToString(_, x, httpClient))
-    }.mkString("\n")
-  }
+    }
+    .mkString("```\n", "\n", "\n```\n")
 
   sys.env.get("GITHUB_STEP_SUMMARY").map(new File(_)).filter(_.isFile) match {
     case Some(summaryFile) =>

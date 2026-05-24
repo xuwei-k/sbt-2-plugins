@@ -67,8 +67,6 @@ lazy val githubTokenOpt: Option[String] = sys.env.get("GITHUB_TOKEN")
 val githubStarCache: TrieMap[String, Int] = TrieMap.empty[String, Int]
 
 val invalidGitHubRepos: Set[(String, String)] = Set(
-  ("shuwarifrica", "version"), // https://github.com/cheleb/sbt-plantuml/pull/169
-  ("cheleb", "plantuml-sbt-plugin"), // https://github.com/shuwariafrica/version/pull/94
   ("olafurpg", "sbt-ci-release"), // https://github.com/sbt/sbt-ci-release/pull/412
 )
 

@@ -1,5 +1,5 @@
 addSbtPlugin("africa.shuwari" % "sbt-version" % "0.7.0")
-addSbtPlugin("ch.epfl.scala" % "sbt-bloop" % "2.0.19")
+addSbtPlugin("ch.epfl.scala" % "sbt-bloop" % "2.1.0")
 addSbtPlugin("ch.epfl.scala" % "sbt-github-dependency-submission" % "3.2.3")
 addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.14.6")
 addSbtPlugin("com.alejandrohdezma" % "sbt-mdoc-toc" % "0.5.0")

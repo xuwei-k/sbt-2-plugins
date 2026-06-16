@@ -101,7 +101,7 @@ def pomToString(f: (String, File), x: ModuleID, httpClient: HttpClient): String 
           token,
           httpClient
         )
-    }.flatten.nextOption
+    }.flatten.nextOption()
   )
 
   Seq(
